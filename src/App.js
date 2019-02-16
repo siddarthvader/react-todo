@@ -1,25 +1,50 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Todos from './components/Todos';
 import './App.css';
-
 class App extends Component {
+  state={
+    todos:[
+      {
+        id:1,
+        title:'Take out the men',
+        checked:false
+      },
+      {
+        id:2,
+        title:'Take out the women',
+        checked:true
+      },
+      {
+        id:3,
+        title:'Take out the kids',
+        checked:false
+      }
+    ]
+  }
+  markComplete=(id)=>{
+    console.log('hello',id);
+    this.setState({
+      todos:this.state.todos.map((item)=>{
+        if(item.id===id){
+          item.checked=!item.checked;
+        }
+        return item;
+      })
+    })
+
+  }
+
+  deleteItem=(id)=>{
+    this.setState({
+      todos:this.state.todos.filter((item)=>{
+        return item.id!==id;
+      })
+    })
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+           <Todos todos={this.state.todos} markComplete={this.markComplete} deleteItem={this.deleteItem}/>
       </div>
     );
   }
